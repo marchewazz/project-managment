@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { hashSync } from 'bcryptjs';
 
 export default function RegisterForm() {
     
@@ -7,6 +6,7 @@ export default function RegisterForm() {
 
     async function registerUser(event: any): Promise<void> {
         event.preventDefault();
+        
         if (event.target.password.value != event.target.repeatedPassword.value) {
             setInfo("Password are not the same");
         } else {
@@ -15,10 +15,10 @@ export default function RegisterForm() {
                 userEmail: event.target.email.value,
                 userFirstName: event.target.firstName.value,
                 userLastName: event.target.lastName.value,
-                userPassword: hashSync(event.target.password.value),
+                userPassword: event.target.password.value,
             } 
             const req = await fetch("/api/register", { method: "POST", body: JSON.stringify(userData) })
-            const res =await req.json();
+            const res = await req.json();
             setInfo(res.message);
         }
     }
