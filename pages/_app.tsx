@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
-  const loggedOnlyPaths: string[] = ["/dashboard"];
+  const loggedOnlyPaths: string[] = ["/dashboard", "/teams"];
   const unloggedOnlyPaths: string[] = ["/login", "/register"];
 
   useEffect(() => {
