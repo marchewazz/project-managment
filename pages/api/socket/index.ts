@@ -10,11 +10,7 @@ const SocketHandler = (req: any, res: any) => {
     res.socket.server.io = io
 
     io.on('connection', socket => {
-      socket.on('input-change', (msg: any) => {
-        console.log(msg);
-        
-        socket.broadcast.emit('update-input', msg)
-      })
+      
     })
 
   }
