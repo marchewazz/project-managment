@@ -6,8 +6,24 @@ export default function Page() {
     const router = useRouter()
     
     const [teamData, setTeamData]: any = useState({});
+    const [buttonText, setButtonText] = useState("Invite");
 
     const [ready, setReady] = useState(false);
+
+    async function generateInvitationLink(): Promise<void> {
+        const { teamid } = router.query
+
+        const invitationData = {
+            userToken: localStorage.getItem("token"),
+            teamID: teamid
+        }
+
+        const req = await fetch("/api/teams/invitations/generate", { method: "POST", body: JSON.stringify(invitationData) })
+        const res = await req.json();
+        
+        await navigator.clipboard.writeText(`http://localhost:3000/invitations/${res.invitationID}`);
+        setButtonText("Copied!")
+    }
 
     useEffect(() => {
        
@@ -33,6 +49,10 @@ export default function Page() {
                 </p>
             ) : (
                 <div>
+                    <button onClick={generateInvitationLink}
+                    disabled={buttonText != "Invite"}>
+                        { buttonText }
+                    </button>
                     <p>
                         Name: { teamData.teamName }
                     </p>
