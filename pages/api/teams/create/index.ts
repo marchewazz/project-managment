@@ -9,7 +9,6 @@ type Message = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Message>) {
     const teamData = JSON.parse(req.body);
     await postgresClient.connect();
-    console.log(teamData);
      
     const userID = (await postgresClient.query(`SELECT "userID" from tokens WHERE "token" = $1`, [teamData.userToken])).rows[0].userID;
 
