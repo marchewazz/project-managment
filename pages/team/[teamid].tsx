@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import CreateTaskForm from '../../components/CreateTaskForm';
 
 export default function Page() {
 
@@ -33,6 +34,8 @@ export default function Page() {
             const { teamid } = router.query
             const req = await fetch(`/api/teams/get/${teamid}`, { method: "GET" })
             const res = await req.json();
+            console.log(res);
+            
             setTeamData(res.teamData)
             setReady(true)
         }
@@ -66,6 +69,12 @@ export default function Page() {
                                 members here
                             </p>
                         )}
+                    </div>
+                    <div>
+                        <p>
+                            Tasks
+                        </p>
+                        <CreateTaskForm teamData={teamData} />
                     </div>
                 </div>
             )}
