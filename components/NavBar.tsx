@@ -20,6 +20,10 @@ export default function NavBar() {
                 onClick={() => router.push("/dashboard")}>
                   Dashboard
                 </button>
+                <button className="bg-green-700"
+                onClick={() => router.push("/teams")}>
+                  Teams
+                </button>
                 <button className="bg-blue-700"
                 onClick={() => router.push("/myprofile")}>
                   Profile
