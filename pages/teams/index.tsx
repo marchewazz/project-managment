@@ -58,10 +58,10 @@ export default function Page() {
                         </button>
                         ) : (
                              <>
-                                 <button onClick={() => setShowCreateTeamForm(false)}>
-                                     HIDE
-                                 </button>
-                                 <CreateTeamForm />
+                                <button onClick={() => setShowCreateTeamForm(false)}>
+                                    HIDE
+                                </button>
+                                <CreateTeamForm />
                              </>
                     )}
                 </>
