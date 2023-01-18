@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CreateTaskForm from '../../components/CreateTaskForm';
+import TeamChat from '../../components/TeamChat';
 
 export default function Page() {
 
@@ -34,7 +35,6 @@ export default function Page() {
             const { teamid } = router.query
             const req = await fetch(`/api/teams/get/${teamid}`, { method: "GET" })
             const res = await req.json();
-            console.log(res);
             
             setTeamData(res.teamData)
             setReady(true)
@@ -75,6 +75,9 @@ export default function Page() {
                             Tasks
                         </p>
                         <CreateTaskForm teamData={teamData} />
+                    </div>
+                    <div>
+                        <TeamChat teamID={router.query.teamid} />
                     </div>
                 </div>
             )}

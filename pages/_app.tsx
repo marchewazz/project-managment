@@ -5,6 +5,8 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import isUserAuthenticated from '../util/isUserAuthenticated'
 
+// import { SocketContext, socket } from '../context/socket'
+
 export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
@@ -17,9 +19,14 @@ export default function App({ Component, pageProps }: AppProps) {
     if (!isUserAuthenticated() && loggedOnlyPaths.includes(router.pathname)) router.push(unloggedOnlyPaths[0]);
   }, [router.pathname])
 
-  return <>
-    <NavBar />
-    <Component {...pageProps} />
-  </>
-  
+  useEffect(() => {
+    fetch ("/api/socket")
+  }, [])
+
+  return (
+      <>
+        <NavBar />
+        <Component {...pageProps} />
+      </>
+  )
 }

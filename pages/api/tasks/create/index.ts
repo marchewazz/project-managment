@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import postgresClient from '../../../../util/createPostgresClient';
-import generateTaskID from '../../../../util/generateTaksID';
+import generateTaskID from '../../../../util/generateTaskID';
 
 type Message = {
     message: string
