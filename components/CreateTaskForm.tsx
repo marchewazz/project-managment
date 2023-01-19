@@ -30,6 +30,7 @@ export default function CreateTaskForm (props: any) {
         
         let taskData: any = {
             userToken: localStorage.getItem("token"),
+            teamID: props.teamData.teamID,
             taskTitle: event.target.taskTitle.value,
             taskDescription: event.target.taskDescription.value,
             taskDate: event.target.taskDate.value,

@@ -1,12 +1,16 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import * as io from "socket.io-client";
 import CreateTaskForm from '../../components/CreateTaskForm';
+import { TasksDisplay } from '../../components/TasksDisplay';
 import TeamChat from '../../components/TeamChat';
 
 export default function Page() {
 
     const router = useRouter()
     
+    const [socket, setSocket]: any = useState();
+
     const [teamData, setTeamData]: any = useState({});
     const [buttonText, setButtonText] = useState("Invite");
 
@@ -30,16 +34,16 @@ export default function Page() {
     useEffect(() => {
        
         if (!router.isReady) return
-        
+        const { teamid } = router.query
+
         const fetchData = async () => {
-            const { teamid } = router.query
             const req = await fetch(`/api/teams/get/${teamid}`, { method: "GET" })
             const res = await req.json();
             
             setTeamData(res.teamData)
             setReady(true)
         }
-
+        setSocket(io.connect({ query: { teamID: teamid }}));
         fetchData()
     }, [router.isReady])
     
@@ -71,13 +75,11 @@ export default function Page() {
                         )}
                     </div>
                     <div>
-                        <p>
-                            Tasks
-                        </p>
-                        <CreateTaskForm teamData={teamData} />
+                        <TasksDisplay socket={socket} teamID={router.query.teamid} />
+                        <CreateTaskForm teamData={teamData} socket={socket} />
                     </div>
                     <div>
-                        <TeamChat teamID={router.query.teamid} />
+                        <TeamChat teamID={router.query.teamid} socket={socket} />
                     </div>
                 </div>
             )}

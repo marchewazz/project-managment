@@ -1,9 +1,6 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
-import * as io from "socket.io-client";
 
 export default function TeamChat(props: any) {
-
-    const socket = io.connect({ query: { teamID: props.teamID }});
 
     const [message, setMessage] = useState("");
     
@@ -18,7 +15,7 @@ export default function TeamChat(props: any) {
             teamID: props.teamID
         }
         setMessage("")
-        socket.emit("send-message", messageData)
+        props.socket.emit("send-message", messageData)
     }
 
     function generateMessages() {
@@ -34,19 +31,17 @@ export default function TeamChat(props: any) {
     }
 
     useEffect(() => {
-        socket.emit("get-messages", { teamID: props.teamID })
+        props.socket.emit("get-messages", { teamID: props.teamID })
     }, [])
 
     useEffect(() => {
-        socket.on("update-messages", (data: any) => {        
+        props.socket.on("update-messages", (data: any) => {        
             setMessages(data)
             setTimeout(() => {
                 messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
-            }, 100);
-            
+            }, 100);  
         })
-        
-    }, [socket])
+    }, [props.socket])
 
     return (
         <>

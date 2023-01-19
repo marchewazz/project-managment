@@ -1,6 +1,8 @@
 import { Server, Socket } from 'Socket.IO'
+
 import getMessages from './messages/getMessages'
 import insertMessage from './messages/InsertMessage'
+import getTasks from './tasks/getTasks'
 
 const SocketHandler = (req: any, res: any) => {
   if (res.socket.server.io) {
@@ -21,6 +23,9 @@ const SocketHandler = (req: any, res: any) => {
       }))
       socket.on("get-messages", async (data: any) => { 
         socket.emit("update-messages", await getMessages(data))
+      })
+      socket.on("get-tasks", async (data: any) => { 
+        socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
       })
     })
   }
