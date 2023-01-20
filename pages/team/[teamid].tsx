@@ -32,6 +32,26 @@ export default function Page() {
         setButtonText("Copied!")
     }
 
+    function generateMembers() {
+        const elements: any[] = [];
+
+        elements.push(
+            <p>
+                { teamData.teamOwner.userNick }
+            </p>
+        )
+
+        for (const member of teamData.teamMembers) {
+            elements.push(
+                <p>
+                    { member.userNick }
+                </p>
+            )
+        }
+
+        return elements;
+    }
+
     useEffect(() => {
        
         if (!router.isReady) return
@@ -40,6 +60,7 @@ export default function Page() {
         const fetchData = async () => {
             const req = await fetch(`/api/teams/get/${teamid}`, { method: "GET" })
             const res = await req.json();
+            console.log(res);
             
             setTeamData(res.teamData)
             setReady(true)
@@ -92,26 +113,18 @@ export default function Page() {
                     <div>
                         { tab == "chat" ? (
                             <div>
-                             <TeamChat teamID={router.query.teamid} socket={socket} />
+                                <TeamChat socket={socket} teamID={router.query.teamid} />
                             </div>
                         ) : (
                             <>
                                 { tab == "tasks" ? (
                                     <div>
                                         <TasksDisplay socket={socket} teamID={router.query.teamid} />
-                                        <CreateTaskForm teamData={teamData} socket={socket} />
+                                        <CreateTaskForm socket={socket} teamData={teamData}  />
                                     </div>
                                 ) : (
                                     <div>
-                                        { teamData.teamMembers.length == 0 ? (
-                                            <p>
-                                                No members
-                                            </p>
-                                        ) : (
-                                            <p>
-                                                members here
-                                            </p>
-                                        )}
+                                        { generateMembers() }
                                     </div>
                                 )}
                             </>

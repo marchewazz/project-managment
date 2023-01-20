@@ -22,7 +22,6 @@ export function TasksDisplay (props: any) {
     
     useEffect(() => {
         props.socket.on("update-tasks", (data: any) => {        
-            console.log(data);
             setTasks(data);
             setReady(true)
         })
