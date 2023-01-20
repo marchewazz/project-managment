@@ -57,12 +57,12 @@ export default function Page() {
                             CREATE
                         </button>
                         ) : (
-                             <>
+                            <>
                                 <button onClick={() => setShowCreateTeamForm(false)}>
                                     HIDE
                                 </button>
                                 <CreateTeamForm />
-                             </>
+                            </>
                     )}
                 </>
             )}

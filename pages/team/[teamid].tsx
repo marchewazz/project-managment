@@ -15,6 +15,7 @@ export default function Page() {
     const [buttonText, setButtonText] = useState("Invite");
 
     const [tab, setTab] = useState("chat");
+    const [showCreateTaskForm, setshowCreateTaskForm] = useState(false);
     const [ready, setReady] = useState(false);
 
     async function generateInvitationLink(): Promise<void> {
@@ -120,7 +121,18 @@ export default function Page() {
                                 { tab == "tasks" ? (
                                     <div>
                                         <TasksDisplay socket={socket} teamID={router.query.teamid} />
-                                        <CreateTaskForm socket={socket} teamData={teamData}  />
+                                        { !showCreateTaskForm ? (
+                                            <button onClick={() => setshowCreateTaskForm(true)}>
+                                                CREATE
+                                            </button>
+                                            ) : (
+                                                <>
+                                                    <button onClick={() => setshowCreateTaskForm(false)}>
+                                                        HIDE
+                                                    </button>
+                                                    <CreateTaskForm socket={socket} teamData={teamData}  />
+                                                </>
+                                        )}                  
                                     </div>
                                 ) : (
                                     <div>
