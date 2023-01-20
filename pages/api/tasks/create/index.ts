@@ -8,7 +8,6 @@ type Message = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Message>) {
     const taskData = JSON.parse(req.body);
-    await postgresClient.connect();
      
     const userID = (await postgresClient.query(`SELECT "userID" from tokens WHERE "token" = $1`, [taskData.userToken])).rows[0].userID;
 

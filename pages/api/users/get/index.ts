@@ -3,7 +3,6 @@ import postgresClient from '../../../../util/createPostgresClient';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
     const userData = JSON.parse(req.body);
-    await postgresClient.connect();
     
     let userID
 

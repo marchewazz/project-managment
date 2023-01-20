@@ -4,7 +4,6 @@ import generateInvitationID from '../../../../../util/generateInvitationID';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
     const invitationData = JSON.parse(req.body);
-    await postgresClient.connect();
     
     const userID = (await postgresClient.query(`SELECT "userID" from tokens WHERE "token" = $1`, [invitationData.userToken])).rows[0].userID
     const invitationID = await generateInvitationID(postgresClient);
