@@ -14,6 +14,7 @@ export default function Page() {
     const [teamData, setTeamData]: any = useState({});
     const [buttonText, setButtonText] = useState("Invite");
 
+    const [tab, setTab] = useState("chat");
     const [ready, setReady] = useState(false);
 
     async function generateInvitationLink(): Promise<void> {
@@ -56,32 +57,68 @@ export default function Page() {
                 </p>
             ) : (
                 <div>
-                    <button onClick={generateInvitationLink}
-                    disabled={buttonText != "Invite"}>
-                        { buttonText }
-                    </button>
-                    <p>
-                        Name: { teamData.teamName }
-                    </p>
                     <div>
-                        { teamData.teamMembers.length == 0 ? (
-                            <p>
-                                No members
-                            </p>
+                        <button onClick={generateInvitationLink}
+                        disabled={buttonText != "Invite"}>
+                            { buttonText }
+                        </button>
+                        <p>
+                            Name: { teamData.teamName }
+                        </p>
+                    </div>
+                    <div>
+                        <span>
+                            Chat
+                            <input type="radio" 
+                            name="tab" 
+                            checked={tab == "chat"}
+                            onChange={() => setTab("chat")} />
+                        </span>
+                        <span>
+                            Tasks
+                            <input type="radio" 
+                            name="tab"
+                            checked={tab == "tasks"}
+                            onChange={() => setTab("tasks")}  />
+                        </span>
+                        <span>
+                            Members
+                            <input type="radio" 
+                            name="tab" 
+                            checked={tab == "members"}
+                            onChange={() => setTab("members")} />
+                        </span>
+                    </div>
+                    <div>
+                        { tab == "chat" ? (
+                            <div>
+                             <TeamChat teamID={router.query.teamid} socket={socket} />
+                            </div>
                         ) : (
-                            <p>
-                                members here
-                            </p>
+                            <>
+                                { tab == "tasks" ? (
+                                    <div>
+                                        <TasksDisplay socket={socket} teamID={router.query.teamid} />
+                                        <CreateTaskForm teamData={teamData} socket={socket} />
+                                    </div>
+                                ) : (
+                                    <div>
+                                        { teamData.teamMembers.length == 0 ? (
+                                            <p>
+                                                No members
+                                            </p>
+                                        ) : (
+                                            <p>
+                                                members here
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
-                    <div>
-                        <TasksDisplay socket={socket} teamID={router.query.teamid} />
-                        <CreateTaskForm teamData={teamData} socket={socket} />
-                    </div>
-                    <div>
-                        <TeamChat teamID={router.query.teamid} socket={socket} />
-                    </div>
                 </div>
+                
             )}
         </>
     )
