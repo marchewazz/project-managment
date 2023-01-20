@@ -51,9 +51,11 @@ export default function TeamChat(props: any) {
                 <div ref={messagesEndRef}/>
             </div>
             <input onChange={(event: any) => setMessage(event.target.value)}
+            onKeyDown={(e) => e.key == 'Enter' && message ? sendMessage() : null }
             type="text" 
             name="message"
-            value={message} />
+            value={message}
+            autoFocus={true} />
             <button className="disabled:bg-red-700 bg-green-700"
             onClick={sendMessage}
             disabled={!message}>
