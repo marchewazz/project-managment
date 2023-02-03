@@ -83,16 +83,17 @@ export default function Page() {
     }
 
     useEffect(() => {
-       
         if (!router.isReady) return
         const { teamid } = router.query
 
         const fetchData = async () => {
-            const req = await fetch(`/api/teams/get/${teamid}`, { method: "GET" })
+            const req = await fetch(`/api/teams/get/${teamid}`, { method: "POST", body: JSON.stringify({ userToken: localStorage.getItem("token") }) })
             const res = await req.json();
-            console.log(res);
-            
-            setTeamData(res.teamData)
+            if (res.message === "ok") {
+                setTeamData(res.teamData)
+            } else {
+                router.push("/dashboard")
+            }
             setReady(true)
         }
         setSocket(io.connect({ query: { teamID: teamid }}));

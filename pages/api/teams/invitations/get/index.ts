@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     INNER JOIN users ON invitations."invitationSender"=users."userID"
     INNER JOIN teams ON invitations."invitationTeamID"=teams."teamID"
     WHERE "invitationID" = $1`, [invitationData.invitationID])).rows[0]    
-    console.log(userID, invitationDBData);
     
     if (!invitationDBData) return res.status(200).send({ message: "no invitation" })
     if (userID == invitationDBData.invitationSender || invitationDBData.teamMembers.includes(userID)) return res.status(200).send({ message: "you are in this team" })
