@@ -18,6 +18,35 @@ export default function Page() {
     const [showCreateTaskForm, setshowCreateTaskForm] = useState(false);
     const [ready, setReady] = useState(false);
 
+    async function createMeeting(): Promise<void> {
+
+        async function getToken(): Promise<string> {
+            const res = await fetch(`/api/videosdk/get-token`, {method: "GET"});
+           
+            const { token } = await res.json();
+           
+            return token;
+        }
+
+        async function getRoomID(token: string) {
+            console.log(token);
+            
+            const res = await fetch(`/api/videosdk/create-meeting`, {
+                method: "POST",
+                body: JSON.stringify({ token: token }),
+            });
+            
+            const { roomId } = await res.json();
+          
+            return roomId;
+        }
+
+        const token: string = await getToken();
+        const roomID: string = await getRoomID(token);
+
+        router.push({pathname: `/call/${roomID}`, query: { token: token }});
+    }
+
     async function generateInvitationLink(): Promise<void> {
         const { teamid } = router.query
 
@@ -29,7 +58,7 @@ export default function Page() {
         const req = await fetch("/api/teams/invitations/generate", { method: "POST", body: JSON.stringify(invitationData) })
         const res = await req.json();
         
-        await navigator.clipboard.writeText(`http://localhost:3000/invitations/${res.invitationID}`);
+        await navigator.clipboard.writeText(`http://localhost:3000/invitation/${res.invitationID}`);
         setButtonText("Copied!")
     }
 
@@ -83,6 +112,9 @@ export default function Page() {
                         <button onClick={generateInvitationLink}
                         disabled={buttonText != "Invite"}>
                             { buttonText }
+                        </button>
+                        <button onClick={createMeeting}>
+                            Create meeting
                         </button>
                         <p>
                             Name: { teamData.teamName }

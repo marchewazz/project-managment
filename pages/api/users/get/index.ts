@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import postgresClient from '../../../../util/createPostgresClient';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-    const userData = JSON.parse(req.body);
+    const userData = JSON.parse(req.body);   
     
     let userID
 

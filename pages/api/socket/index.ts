@@ -14,14 +14,12 @@ const SocketHandler = (req: any, res: any) => {
     res.socket.server.io = io
 
     io.on("connection", (socket: Socket) => {   
-      
-      socket.join(socket.handshake.query["teamID"] || "")
-      
       socket.on("send-message", (async (data: any) => {    
         await insertMessage(data);  
         io.in(socket.handshake.query["teamID"] as any).emit("update-messages", await getMessages(data))
       }))
       socket.on("get-messages", async (data: any) => { 
+        socket.join(socket.handshake.query["teamID"] || "")
         socket.emit("update-messages", await getMessages(data))
       })
       socket.on("get-tasks", async (data: any) => { 
