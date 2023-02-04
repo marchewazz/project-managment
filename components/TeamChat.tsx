@@ -20,11 +20,18 @@ export default function TeamChat(props: any) {
 
     function generateMessages() {
         const elements = [];
-
+        
         for (const message of messages) {
-            elements.push(<p>
-                { message.userNick }: { message.messageText }
-            </p>)
+            if (message.messageSender === props.userData.userID) {
+                elements.push(<p className="text-end">
+                    { message.messageText } :{ message.userNick } 
+                </p>)
+            } else {
+                elements.push(<p className="text-start">
+                    { message.userNick }: { message.messageText }
+                </p>)
+            }
+            
         }
 
         return elements

@@ -16,6 +16,9 @@ export default function Page() {
 
     const [tab, setTab] = useState("chat");
     const [showCreateTaskForm, setshowCreateTaskForm] = useState(false);
+
+    const [userData, setUserData] = useState();
+
     const [ready, setReady] = useState(false);
 
     async function createMeeting(): Promise<void> {
@@ -94,6 +97,9 @@ export default function Page() {
             } else {
                 router.push("/dashboard")
             }
+            const userReq = await fetch(`/api/users/get`, { method: "POST", body: JSON.stringify({ userToken: localStorage.getItem("token") }) })
+            const userRes = await userReq.json();
+            setUserData(userRes.userData)
             setReady(true)
         }
         setSocket(io.connect({ query: { teamID: teamid }}));
@@ -147,7 +153,7 @@ export default function Page() {
                     <div>
                         { tab == "chat" ? (
                             <div>
-                                <TeamChat socket={socket} teamID={router.query.teamid} />
+                                <TeamChat socket={socket} teamID={router.query.teamid} userData={userData} />
                             </div>
                         ) : (
                             <>
