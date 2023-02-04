@@ -41,9 +41,7 @@ export default function CreateTaskForm (props: any) {
             return
         }
         
-        const req = await fetch(`/api/tasks/create`, { method: "POST", body: JSON.stringify(taskData) })
-        const res = await req.json();
-        setInfo(res.message)
+        props.socket.emit("create-task", taskData)
         
     }
 

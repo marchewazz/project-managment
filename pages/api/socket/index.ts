@@ -2,6 +2,7 @@ import { Server, Socket } from 'Socket.IO'
 
 import getMessages from './messages/getMessages'
 import insertMessage from './messages/InsertMessage'
+import createTask from './tasks/createTask'
 import deleteTask from './tasks/deleteTask'
 import getTasks from './tasks/getTasks'
 
@@ -22,6 +23,12 @@ const SocketHandler = (req: any, res: any) => {
       socket.on("get-messages", async (data: any) => { 
         socket.join(socket.handshake.query["teamID"] || "")
         socket.emit("update-messages", await getMessages(data))
+      })
+      socket.on("create-task", async (data: any) => { 
+        await createTask(data)
+        console.log(`fs`);
+        
+        socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
       })
       socket.on("get-tasks", async (data: any) => { 
         socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
