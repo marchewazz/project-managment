@@ -6,11 +6,13 @@ export function TasksDisplay (props: any) {
     const [tasks, setTasks] = useState([]);
     const [ready, setReady] = useState(false);
 
-    function generateTasks() {
+    const [taskTab, setTaskTab] = useState("to do")
+
+    function generateTasks(status: string) {
         let elements: any[] = [];
 
         for (const task of tasks) {
-            elements.push(<Task taskData={task} />)
+            if (task.taskStatus == status) elements.push(<Task taskData={task} status={status} socket={props.socket} />)
         }
 
         return elements
@@ -21,7 +23,9 @@ export function TasksDisplay (props: any) {
     }, [])
     
     useEffect(() => {
-        props.socket.on("update-tasks", (data: any) => {        
+        props.socket.on("update-tasks", (data: any) => {  
+            console.log(`task`);
+                  
             setTasks(data);
             setReady(true)
         })
@@ -41,7 +45,25 @@ export function TasksDisplay (props: any) {
                         </p>
                     ): (
                         <>
-                            { generateTasks() }
+                            <div>
+                                <span>
+                                    To do
+                                    <input type="radio" 
+                                    name="taskTab" 
+                                    checked={taskTab == "to do"}
+                                    onChange={() => setTaskTab("to do")} />
+                                </span>
+                                <span>
+                                    Done
+                                    <input type="radio" 
+                                    name="taskTab"
+                                    checked={taskTab == "done"}
+                                    onChange={() => setTaskTab("done")}  />
+                                </span>
+                            </div>
+                            <div>
+                                { generateTasks(taskTab) }
+                            </div>
                         </>
                     )}
                 </>

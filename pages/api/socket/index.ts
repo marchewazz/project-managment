@@ -2,6 +2,7 @@ import { Server, Socket } from 'Socket.IO'
 
 import getMessages from './messages/getMessages'
 import insertMessage from './messages/InsertMessage'
+import deleteTask from './tasks/deleteTask'
 import getTasks from './tasks/getTasks'
 
 const SocketHandler = (req: any, res: any) => {
@@ -24,6 +25,10 @@ const SocketHandler = (req: any, res: any) => {
       })
       socket.on("get-tasks", async (data: any) => { 
         socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
+      })
+      socket.on("delete-task", async (data: any) => { 
+        await deleteTask(data.taskID);
+        io.in(socket.handshake.query["teamID"] as any).emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
       })
     })
   }

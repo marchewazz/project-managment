@@ -1,4 +1,9 @@
 export function Task(props: any) {
+
+    function deleteTask() {
+        props.socket.emit("delete-task", { taskID: props.taskData.taskID })
+    }
+
     return (
         <div>
             <p>
@@ -15,6 +20,20 @@ export function Task(props: any) {
             <p>
                 Deadline: { props.taskData.taskDate }
             </p>
+            <div className="flex">
+                { props.status == "to do" ? (
+                    <button>
+                        MARK AS DONE
+                    </button>
+                ) : (
+                    <button>
+                        MARK AS UNDONE
+                    </button>
+                )}
+                <button onClick={deleteTask}>
+                    DELETE
+                </button>
+            </div>
         </div>
     )
 }
