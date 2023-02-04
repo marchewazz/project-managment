@@ -25,10 +25,8 @@ const SocketHandler = (req: any, res: any) => {
         socket.emit("update-messages", await getMessages(data))
       })
       socket.on("create-task", async (data: any) => { 
-        await createTask(data)
-        console.log(`fs`);
-        
-        socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
+        await createTask(data)        
+        io.in(socket.handshake.query["teamID"] as any).emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
       })
       socket.on("get-tasks", async (data: any) => { 
         socket.emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
