@@ -1,6 +1,13 @@
 export function Task(props: any) {
 
-    function deleteTask() {
+    function changeTaskMark(newStatus: string): void {
+        const taskData = props.taskData;
+        taskData["taskStatus"] = newStatus;
+        
+        props.socket.emit("edit-task", taskData)
+    }
+
+    function deleteTask(): void {
         props.socket.emit("delete-task", { taskID: props.taskData.taskID })
     }
 
@@ -22,11 +29,11 @@ export function Task(props: any) {
             </p>
             <div className="flex">
                 { props.status == "to do" ? (
-                    <button>
+                    <button onClick={() => changeTaskMark("done")}>
                         MARK AS DONE
                     </button>
                 ) : (
-                    <button>
+                    <button onClick={() => changeTaskMark("to do")}>
                         MARK AS UNDONE
                     </button>
                 )}
