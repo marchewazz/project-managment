@@ -8,9 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const userID = (await postgresClient.query(`SELECT "userID" from tokens WHERE "token" = $1`, [invitationData.userToken])).rows[0].userID
 
     const invitationDBData = await (await postgresClient.query(`SELECT "invitationSender", "userNick", "teamName", "teamMembers" 
-    FROM invitations 
-    INNER JOIN users ON invitations."invitationSender"=users."userID"
-    INNER JOIN teams ON invitations."invitationTeamID"=teams."teamID"
+    FROM "team-invitations"
+    INNER JOIN users ON "team-invitations"."invitationSender"=users."userID"
+    INNER JOIN teams ON "team-invitations"."invitationTeamID"=teams."teamID"
     WHERE "invitationID" = $1`, [invitationData.invitationID])).rows[0]    
     
     if (!invitationDBData) return res.status(200).send({ message: "no invitation" })

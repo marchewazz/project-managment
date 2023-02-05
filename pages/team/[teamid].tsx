@@ -69,16 +69,16 @@ export default function Page() {
         const elements: any[] = [];
 
         elements.push(
-            <p>
+            <button>
                 { teamData.teamOwner.userNick }
-            </p>
+            </button>
         )
 
         for (const member of teamData.teamMembers) {
             elements.push(
-                <p>
+                <button onClick={() => router.push(`/profile/${member.userID}`)}>
                     { member.userNick }
-                </p>
+                </button>
             )
         }
 

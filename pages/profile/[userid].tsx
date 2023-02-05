@@ -38,6 +38,9 @@ export default function Page() {
                     <p>
                         { userData.userFirstName } { userData.userLastName }
                     </p>
+                    <button>
+                        ADD FRIEND
+                    </button>
                 </>
             )}
         </>
