@@ -20,30 +20,23 @@ export default function Page() {
 
     function sendInvitation() {
         const { userid } = router.query
-        console.log(userid);
-        
         socket.emit("send-invitation", { userToken: localStorage.getItem("token"), receiverUserID: userid })
     }
 
     function cancelInvitation() {
         const { userid } = router.query
-        console.log(userid);
         const invitation = invitations.find((element: any) => element.invitationReceiver == userid || element.invitationSender == userid)
         socket.emit("cancel-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
 
     function acceptInvitation() {
         const { userid } = router.query
-        console.log(userid);
-        
         const invitation = invitations.find((element: any) => element.invitationSender == userid)
         socket.emit("accept-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
 
     function rejectInvitation() {
         const { userid } = router.query
-        console.log(userid);
-        
         const invitation = invitations.find((element: any) => element.invitationSender == userid)
         socket.emit("reject-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
@@ -63,7 +56,6 @@ export default function Page() {
             setUserData(res.userData)
             const localUserReq = await fetch(`/api/users/get`, { method: "POST", body: JSON.stringify({ userToken: localStorage.getItem("token")}) })
             const localUserRes = await localUserReq.json();
-            console.log(localUserRes);
             
             setLocalUserData(localUserRes.userData)
             setReady(true);
@@ -84,7 +76,7 @@ export default function Page() {
     useEffect(() => {
         const { userid } = router.query
         const invitation = invitations.find((element: any) => element.invitationReceiver == userid || element.invitationSender == userid)
-        console.log(invitation);
+       
         if (invitation) {
             if (invitation.isUserSender) setInvitationStatus("sent")
             else setInvitationStatus("received")
@@ -97,8 +89,6 @@ export default function Page() {
     useEffect(() => {
         if (localUserData) {
             const { userid } = router.query
-            console.log(localUserData);
-            
             if (localUserData.userFriends.includes(userid)) setFriends(true)
             else setFriends(false)
         }
