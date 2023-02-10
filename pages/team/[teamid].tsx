@@ -69,7 +69,7 @@ export default function Page() {
         const elements: any[] = [];
 
         elements.push(
-            <button>
+            <button onClick={() => router.push(`/profile/${teamData.teamOwner.userID}`)}>
                 { teamData.teamOwner.userNick }
             </button>
         )

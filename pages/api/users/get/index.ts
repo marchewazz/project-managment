@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         userID = userData.userID;
     }
 
-    const userDBData = await (await postgresClient.query(`SELECT "userNick", "userFirstName", "userLastName", "userEmail", "userCreateData", "userID" FROM users WHERE "userID" = $1;`,
+    const userDBData = await (await postgresClient.query(`SELECT "userNick", "userFirstName", "userLastName", "userEmail", "userCreateData", "userID", "userFriends" FROM users WHERE "userID" = $1;`,
         [userID])).rows[0]
 
     return res.status(200).send({ userData: userDBData })
