@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .tab-button {
+    @apply text-blue-800 text-2xl
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

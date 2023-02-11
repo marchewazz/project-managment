@@ -11,17 +11,18 @@ export default function CreateTeamForm () {
         }
 
         const req = await fetch("/api/teams/create", { method: "POST", body: JSON.stringify(teamData) })
-        const res = await req.json();
-        console.log(res);
-        
+        const res = await req.json();   
     }
 
     return (
         <>
-            <form onSubmit={submitTeam}>
-                <input type="text" 
-                name="teamName" />
-                <button>
+            <form onSubmit={submitTeam}
+            className="grid grid-flow-row">
+                <input className="border-b-2 text-center" 
+                type="text" 
+                name="teamName"
+                placeholder="Team name" />
+                <button className="bg-green-600 px-2 text-white place-self-center">
                     CREATE
                 </button>
             </form>

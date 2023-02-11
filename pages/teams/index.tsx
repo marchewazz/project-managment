@@ -16,7 +16,8 @@ export default function Page() {
         let elements: any[] = [];
 
         for (const team of teamsAvailable) {
-            elements.push(<button onClick={() => router.push(`/team/${team.teamID}`)}>
+            elements.push(<button onClick={() => router.push(`/team/${team.teamID}`)}
+            className="border border-blue-800 rounded-md text-blue-800 py-1 font-bold">
                 { team.teamName }
             </button>)
         }
@@ -44,27 +45,31 @@ export default function Page() {
                     Loading...
                 </p>
             ) : (
-                <>
+                <div className="grid grid-flow-col">
                     { teamsAvailable.length == 0 ? (
                         <p>
                             No teams
                         </p>
                     ) : (
-                        generateTeamsButtons() 
+                        <div className="grid grid-flow-row gap-2">
+                            { generateTeamsButtons() }
+                        </div>
                     )}
                     { !showCreateTeamForm ? (
-                        <button onClick={() => setShowCreateTeamForm(true)}>
+                        <button onClick={() => setShowCreateTeamForm(true)}
+                        className="bg-green-600 px-2 text-white place-self-start justify-self-end">
                             CREATE
                         </button>
                         ) : (
-                            <>
-                                <button onClick={() => setShowCreateTeamForm(false)}>
+                            <div className="grid grid-flow-col">
+                                <CreateTeamForm />
+                                <button onClick={() => setShowCreateTeamForm(false)}
+                                className="bg-red-600 px-2 text-white place-self-start justify-self-end">
                                     HIDE
                                 </button>
-                                <CreateTeamForm />
-                            </>
+                            </div>
                     )}
-                </>
+                </div>
             )}
            
         </>

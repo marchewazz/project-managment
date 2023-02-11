@@ -13,35 +13,34 @@ export default function NavBar() {
     }, [router.asPath])
 
     return (
-        <>
+        <div className="flex justify-evenly">
             { userAuthenticated ? (
               <>
-                <button className="bg-red-700"
+                <button className="tab-button"
                 onClick={() => router.push("/dashboard")}>
                   Dashboard
                 </button>
-                <button className="bg-green-700"
+                <button className="tab-button"
                 onClick={() => router.push("/teams")}>
                   Teams
                 </button>
-                <button className="bg-blue-700"
+                <button className="tab-button"
                 onClick={() => router.push("/myprofile")}>
                   Profile
                 </button>
               </>
             ) : (
               <>
-                 <button className="bg-red-700"
+                 <button className="tab-button"
                 onClick={() => router.push("/register")}>
                   Register
                 </button>
-                <button className="bg-blue-700"
+                <button className="tab-button"
                 onClick={() => router.push("/login")}>
                   Login
                 </button>
               </>
             )}
-            
-        </>
+        </div>
     )
 }

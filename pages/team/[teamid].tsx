@@ -63,6 +63,9 @@ export default function Page() {
         
         await navigator.clipboard.writeText(`http://localhost:3000/invitation/${res.invitationID}`);
         setButtonText("Copied!")
+        setTimeout(() => {
+            setButtonText("Invite")
+        }, 5000);
     }
 
     function generateMembers() {
@@ -108,46 +111,86 @@ export default function Page() {
     
 
     return ( 
-        <>
+        <div>
             {!ready ? (
                 <p>
                     Loading...
                 </p>
             ) : (
                 <div>
-                    <div>
+                    <div className="flex justify-evenly">
+                        <p className="font-extrabold">
+                            { teamData.teamName }
+                        </p>
                         <button onClick={generateInvitationLink}
+                        className="flex content-center"
                         disabled={buttonText != "Invite"}>
                             { buttonText }
+                            { buttonText == "Invite" ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="1.5" 
+                                stroke="currentColor" 
+                                class="w-6 h-6">
+                                    <path stroke-linecap="round" 
+                                    stroke-linejoin="round" 
+                                    d="M12 4.5v15m7.5-7.5h-15" 
+                                    />
+                                </svg>                              
+                            ) : (null)}
                         </button>
-                        <button onClick={createMeeting}>
+                        <button onClick={createMeeting}
+                        className="flex content-center">
                             Create meeting
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke-width="1.5" 
+                            stroke="currentColor" 
+                            class="w-6 h-6">
+                                <path stroke-linecap="round" 
+                                d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" 
+                                />
+                            </svg>
                         </button>
-                        <p>
-                            Name: { teamData.teamName }
-                        </p>
                     </div>
-                    <div>
+                    <div className="flex justify-evenly">
                         <span>
-                            Chat
-                            <input type="radio" 
+                            <input className="peer hidden"
+                            type="radio" 
                             name="tab" 
+                            id="chat"
                             checked={tab == "chat"}
                             onChange={() => setTab("chat")} />
+                            <label className="text-xl peer-checked:text-blue-800 peer-checked:font-bold"
+                            htmlFor="chat">
+                                Chat
+                            </label>
                         </span>
                         <span>
-                            Tasks
-                            <input type="radio" 
+                            <input className="peer hidden"
+                            type="radio" 
                             name="tab"
+                            id="tasks"
                             checked={tab == "tasks"}
                             onChange={() => setTab("tasks")}  />
+                            <label className="text-xl peer-checked:text-blue-800 peer-checked:font-bold"
+                            htmlFor="tasks">
+                                Tasks
+                            </label>
                         </span>
                         <span>
-                            Members
-                            <input type="radio" 
+                            <input className="peer hidden"
+                            type="radio" 
                             name="tab" 
+                            id="members"
                             checked={tab == "members"}
                             onChange={() => setTab("members")} />
+                            <label className="text-xl peer-checked:text-blue-800 peer-checked:font-bold"
+                            htmlFor="members">
+                                Members
+                            </label>
                         </span>
                     </div>
                     <div>
@@ -184,7 +227,7 @@ export default function Page() {
                 </div>
                 
             )}
-        </>
+        </div>
     )
     
 }

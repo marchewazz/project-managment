@@ -57,16 +57,29 @@ export default function TeamChat(props: any) {
                 { generateMessages() }
                 <div ref={messagesEndRef}/>
             </div>
-            <input onChange={(event: any) => setMessage(event.target.value)}
+            <input className="border-b-2" 
+            onChange={(event: any) => setMessage(event.target.value)}
             onKeyDown={(e) => e.key == 'Enter' && message ? sendMessage() : null }
             type="text" 
             name="message"
+            placeholder="Write a message..."
             value={message}
             autoFocus={true} />
-            <button className="disabled:bg-red-700 bg-green-700"
+            <button className="group p-1"
             onClick={sendMessage}
             disabled={!message}>
-                Send
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke-width="1.5" 
+                stroke="currentColor" 
+                class="w-6 h-6">
+                    <path stroke-linecap="round" 
+                    className="group-disabled:text-gray-400 group-disabled:fill-gray-300 fill-blue-800"
+                    stroke-linejoin="round" 
+                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" 
+                    />
+                </svg>
             </button>
         </>
     )
