@@ -202,22 +202,24 @@ export default function Page() {
                             <>
                                 { tab == "tasks" ? (
                                     <div>
-                                        <TasksDisplay socket={socket} teamID={router.query.teamid} />
                                         { !showCreateTaskForm ? (
-                                            <button onClick={() => setshowCreateTaskForm(true)}>
+                                            <button className="green-button"
+                                            onClick={() => setshowCreateTaskForm(true)}>
                                                 CREATE
                                             </button>
                                             ) : (
                                                 <>
-                                                    <button onClick={() => setshowCreateTaskForm(false)}>
+                                                    <button className="red-button"
+                                                    onClick={() => setshowCreateTaskForm(false)}>
                                                         HIDE
                                                     </button>
                                                     <CreateTaskForm socket={socket} teamData={teamData}  />
                                                 </>
-                                        )}                  
+                                        )}  
+                                        <TasksDisplay socket={socket} teamID={router.query.teamid} />            
                                     </div>
                                 ) : (
-                                    <div>
+                                    <div className="grid grid-flow-row">
                                         { generateMembers() }
                                     </div>
                                 )}

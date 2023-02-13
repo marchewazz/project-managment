@@ -64,7 +64,7 @@ export default function Page() {
                             <div className="grid grid-flow-col">
                                 <CreateTeamForm />
                                 <button onClick={() => setShowCreateTeamForm(false)}
-                                className="bg-red-600 px-2 text-white place-self-start justify-self-end">
+                                className="red-button place-self-start justify-self-end">
                                     HIDE
                                 </button>
                             </div>

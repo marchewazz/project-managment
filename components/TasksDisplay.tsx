@@ -40,31 +40,28 @@ export function TasksDisplay (props: any) {
             ) : (
                 <>
                     { tasks.length == 0 ? (
-                        <p>
+                        <p className="font-extrabold text-center text-2xl">
                             No tasks
                         </p>
                     ): (
-                        <>
-                            <div>
-                                <span>
+                        <div className="grid grid-flow-col">
+                            <div className="bg-red-200 border-2 border-red-800">
+                                <p className="font-extrabold text-center">
                                     To do
-                                    <input type="radio" 
-                                    name="taskTab" 
-                                    checked={taskTab == "to do"}
-                                    onChange={() => setTaskTab("to do")} />
-                                </span>
-                                <span>
+                                </p>
+                                <div>
+                                    { generateTasks("to do") }
+                                </div>
+                            </div>
+                            <div className="bg-green-200 border-2 border-green-800">
+                                <p className="font-extrabold text-center">
                                     Done
-                                    <input type="radio" 
-                                    name="taskTab"
-                                    checked={taskTab == "done"}
-                                    onChange={() => setTaskTab("done")}  />
-                                </span>
+                                </p>
+                                <div>
+                                    { generateTasks("done") }
+                                </div>
                             </div>
-                            <div>
-                                { generateTasks(taskTab) }
-                            </div>
-                        </>
+                        </div>
                     )}
                 </>
             )}

@@ -6,6 +6,12 @@
   .tab-button {
     @apply text-blue-800 text-2xl
   }
+  .green-button {
+    @apply bg-green-600 px-2 text-white 
+  }
+  .red-button {
+    @apply bg-red-600 px-2 text-white 
+  }
 }
 
 * {

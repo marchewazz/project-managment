@@ -22,7 +22,7 @@ export default function CreateTeamForm () {
                 type="text" 
                 name="teamName"
                 placeholder="Team name" />
-                <button className="bg-green-600 px-2 text-white place-self-center">
+                <button className="green-button place-self-center">
                     CREATE
                 </button>
             </form>
