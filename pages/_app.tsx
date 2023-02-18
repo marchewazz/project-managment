@@ -5,13 +5,11 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import isUserAuthenticated from '../util/isUserAuthenticated'
 
-// import { SocketContext, socket } from '../context/socket'
-
 export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
-  const loggedOnlyPaths: string[] = ["/dashboard", "/teams", "/myprofile", "/team/[teamid]"];
+  const loggedOnlyPaths: string[] = ["/dashboard", "/teams", "/myprofile", "/team/[teamid]", "call/[callid]", "call/invitation/[callid]"];
   const unloggedOnlyPaths: string[] = ["/login", "/register"];
 
   useEffect(() => { 
