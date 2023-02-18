@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let userWithPassedNick = await (await postgresClient.query(`SELECT COUNT(*) AS AMOUNT FROM users WHERE "userNick" = $1`, [userData.userNick])).rows[0].amount;
     if (Number(userWithPassedNick) != 0) return res.status(200).json({ message: 'Nick is taken' })
 
-    const values = [await generateUserID(postgresClient), userData.userNick, userData.userFirstName, userData.userLastName, userData.userEmail, hashSync(userData.userPassword)];
-    await postgresClient.query(`INSERT INTO "users" ("userID", "userNick", "userFirstName", "userLastName", "userEmail", "userCreateData", "userPassword") VALUES ($1, $2, $3, $4, $5, now(), $6);`, values);
+    const values = [await generateUserID(postgresClient), userData.userNick, userData.userFirstName, userData.userLastName, userData.userEmail, hashSync(userData.userPassword), []];
+    await postgresClient.query(`INSERT INTO "users" ("userID", "userNick", "userFirstName", "userLastName", "userEmail", "userCreateData", "userPassword", "userFriends") VALUES ($1, $2, $3, $4, $5, now(), $6, $7);`, values);
     res.status(200).json({ message: 'Registered' })
 }
