@@ -13,17 +13,7 @@ export default function Page() {
     const [callID, setCallID]: any = useState();
     const [userName, setUserName] = useState("");
 
-    const [buttonText, setButtonText] = useState("Invite");
-
     const router = useRouter();
-
-    async function generateCallInvitation(): Promise<void> {
-        await navigator.clipboard.writeText(`http://localhost:3000/call/invitation/${callID}`);
-        setButtonText("Copied!")
-        setTimeout(() => {
-            setButtonText("Invite");
-        }, 5000);
-    }
 
     useEffect(() => {
         if (!router.isReady) return
@@ -45,10 +35,6 @@ export default function Page() {
         <>
             { token && callID && userName ? (
                 <>
-                    <button onClick={generateCallInvitation}
-                    disabled={buttonText != "Invite"}>
-                        { buttonText }
-                    </button>
                     <MeetingProvider
                     config={{
                     meetingId: callID,

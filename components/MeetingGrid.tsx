@@ -1,18 +1,18 @@
-import { useMeeting } from "@videosdk.live/react-sdk";
+import { useMeeting, useParticipant } from "@videosdk.live/react-sdk";
 import { useEffect, useState } from "react";
+import MeetingMediaButton from "./MeetingMediaButtons";
 
 import ParticipantView from "./ParticipantView";
-
-
 
 export default function MeetingGrid(props: any) {
 
   const [joined, setJoined] = useState(false);
   const [inProgress, setInProgress] = useState(false);
+  const [highlightedUser, setHighlightedUser]: any = useState();
 
-  const { participants, join, leave, toggleMic, toggleWebcam, toggleScreenShare } = useMeeting({ 
+  const { participants, join, leave, activeSpeakerId, presenterId, localParticipant } = useMeeting({ 
     onMeetingJoined() {
-      setJoined(true);
+      setJoined(true);      
       setInProgress(false);
     },
     onMeetingLeft() {
@@ -23,11 +23,26 @@ export default function MeetingGrid(props: any) {
 
   function generateParticipants() {
     let elements: any[] = [];  
+    
     participants.forEach((participant: any) => {
-      elements.push(<ParticipantView key={participant.id} participantId={participant.id} />)
+      if (participant.id != highlightedUser) elements.push(<ParticipantView key={participant.id} participantId={participant.id} />)
     })
     return elements;
   }
+
+  useEffect(() => {
+    if (participants.size > 0) {
+      if (!highlightedUser) setHighlightedUser(participants.entries().next().value[1].id)
+    }
+  }, [participants])
+
+  useEffect(() => {
+    if (activeSpeakerId && !presenterId) setHighlightedUser(activeSpeakerId)
+  }, [activeSpeakerId])
+
+  useEffect(() => {
+    if (presenterId) setHighlightedUser(presenterId)
+  }, [presenterId])
 
   function leaveMeeting () {
     setInProgress(true);
@@ -45,25 +60,15 @@ export default function MeetingGrid(props: any) {
       {joined ? 
       (
         <div>
-          <div className="grid grid-flow-col">
-            <button onClick={leaveMeeting}>
-              Leave
-            </button>
-            <button onClick={toggleMic}>
-              toggleMic
-            </button>
-            <button onClick={toggleWebcam}>
-              toggleWebcam
-            </button>
-            <button onClick={toggleScreenShare}>
-              toggleScreenShare
-            </button> 
-          </div>
-          <div className="wrapper">
-            <div className="flex">
+          <div className="grid grid-flow-row">
+            <div>
+              <ParticipantView key={highlightedUser} participantId={highlightedUser} />
+            </div>
+            <div className="grid grid-flow-col">
               { generateParticipants() }
             </div>
           </div>
+          <MeetingMediaButton participantId={localParticipant.id} leaveMeeting={leaveMeeting} />
         </div>
       ) 
       : (<button onClick={joinMeeting}
