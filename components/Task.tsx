@@ -28,7 +28,7 @@ export function Task(props: any) {
                 Deadline: { props.taskData.taskDate }
             </p>
             <div className="flex justify-evenly">
-                { props.status == "to do" ? (
+                { props.taskData.taskStatus == "to do" ? (
                     <button onClick={() => changeTaskStatus("done")}>
                         MARK AS DONE
                     </button>

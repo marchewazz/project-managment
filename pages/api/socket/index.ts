@@ -12,6 +12,7 @@ import createTask from './tasks/createTask'
 import deleteTask from './tasks/deleteTask'
 import editTask from './tasks/editTask'
 import getTasks from './tasks/getTasks'
+import getUpcomingUserTasks from './tasks/getUpcomingUserTasks'
 
 const SocketHandler = (req: any, res: any) => {
   if (res.socket.server.io) {
@@ -47,6 +48,9 @@ const SocketHandler = (req: any, res: any) => {
       socket.on("delete-task", async (data: any) => { 
         await deleteTask(data.taskID);
         io.in(socket.handshake.query["teamID"] as any).emit("update-tasks", await getTasks(socket.handshake.query["teamID"]))
+      })
+      socket.on("get-upcoming-user-tasks", async (data: any) => { 
+        socket.emit("update-upcoming-user-tasks", await getUpcomingUserTasks(data));
       })
       // INVITATIONS
       socket.on("get-invitations", async (data: any) => {

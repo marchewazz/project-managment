@@ -1,11 +1,11 @@
-import LoginForm from "../../components/LoginForm";
+
+import Dashboard from "../../components/Dashboard";
 
 export default function Page() {
+
     return (
         <>
-            <p>
-                Dashboard
-            </p>
+            <Dashboard />
         </>
     )
 }

@@ -122,8 +122,7 @@ export default function CreateTaskForm (props: any) {
                 <input className="border-b-2 text-center" 
                 type="datetime-local" 
                 placeholder="Date and time"
-                name="taskDate"
-                value={getNow()} />
+                name="taskDate" />
                 <div className="flex divide-x divide-blue-800">
                     <div>
                         <p>

@@ -12,7 +12,7 @@ export function TasksDisplay (props: any) {
         let elements: any[] = [];
 
         for (const task of tasks) {
-            if (task.taskStatus == status) elements.push(<Task taskData={task} status={status} socket={props.socket} />)
+            if (task.taskStatus == status) elements.push(<Task taskData={task} socket={props.socket} />)
         }
 
         return elements
