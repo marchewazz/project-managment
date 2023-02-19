@@ -33,6 +33,7 @@ export default function MeetingGrid(props: any) {
   useEffect(() => {
     if (participants.size > 0) {
       if (!highlightedUser) setHighlightedUser(participants.entries().next().value[1].id)
+      if (!participants.has(highlightedUser)) setHighlightedUser(participants.entries().next().value[1].id)
     }
   }, [participants])
 
