@@ -15,6 +15,10 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => { 
     if (isUserAuthenticated() && unloggedOnlyPaths.includes(router.pathname)) router.push(loggedOnlyPaths[0]);
     if (!isUserAuthenticated() && loggedOnlyPaths.includes(router.pathname)) router.push(unloggedOnlyPaths[0]);
+    if (!unloggedOnlyPaths.includes(router.pathname) && !loggedOnlyPaths.includes(router.pathname)) {
+      if (isUserAuthenticated()) router.push(loggedOnlyPaths[0])
+      if (!isUserAuthenticated()) router.push(unloggedOnlyPaths[0])
+    }
   }, [router.pathname])
 
   useEffect(() => {
