@@ -56,6 +56,8 @@ export default function Page() {
             setUserData(res.userData)
             const localUserReq = await fetch(`/api/users/get`, { method: "POST", body: JSON.stringify({ userToken: localStorage.getItem("token")}) })
             const localUserRes = await localUserReq.json();
+
+            if (localUserRes.userData.userID === userid) router.push("/myprofile")
             
             setLocalUserData(localUserRes.userData)
             setReady(true);
