@@ -8,26 +8,6 @@ export default function CreateTaskForm (props: any) {
 
     const [info, setInfo] = useState("");
 
-    function generateUsersOptions() {
-        const elements = [];
-
-        elements.push(
-            <option value={props.teamData.teamOwner.userID}>
-                { props.teamData.teamOwner.userNick }
-            </option>
-        )
-
-        for (const member of props.teamData.teamMembers) {
-            elements.push(
-                <option value={member.userID}>
-                    { member.userNick }
-                </option>
-            )
-        }
-
-        return elements;
-    }
-
     function generateAvailableUsers() {
 
         function moveUserToResponsible(member: any) {
@@ -42,7 +22,8 @@ export default function CreateTaskForm (props: any) {
 
         for (const member of availableUsers) {
             elements.push(
-                <button onClick={() => moveUserToResponsible(member)}>
+                <button onClick={() => moveUserToResponsible(member)}
+                className="white-button p-2">
                     { member.userNick }
                 </button>
             )
@@ -65,7 +46,8 @@ export default function CreateTaskForm (props: any) {
         
         for (const member of responsibleUsers) {
             elements.push(
-                <button onClick={() => moveUserToResponsible(member)}>
+                <button onClick={() => moveUserToResponsible(member)}
+                className="white-button p-2">
                     { member.userNick }
                 </button>
             )
@@ -87,17 +69,14 @@ export default function CreateTaskForm (props: any) {
         }
         if (!taskData.taskTitle) {
             setInfo("Pass title")
+            setTimeout(() => {
+                setInfo("");
+            }, 5000);
             return
         }
         
         props.socket.emit("create-task", taskData)
         
-    }
-
-    function getNow(): string {
-        let now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        return now.toISOString().slice(0,16);
     }
 
     useEffect(() => {
@@ -128,7 +107,7 @@ export default function CreateTaskForm (props: any) {
                         <p>
                             Available users
                         </p>
-                        <div>
+                        <div className="flex justify-center">
                             { generateAvailableUsers() }
                         </div>
                     </div>
@@ -136,18 +115,18 @@ export default function CreateTaskForm (props: any) {
                         <p>
                             ResponsibleUsers
                         </p>
-                        <div>
+                        <div className="flex justify-center">
                             { generateResponsibleUsers() }
                         </div>
                     </div>
                 </div>
+                <p>
+                    { info }
+                </p>
                 <button className="green-button">
                     CREATE
                 </button>
             </form>
-            <p>
-                { info }
-            </p>
         </>
     )
 }

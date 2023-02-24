@@ -72,14 +72,16 @@ export default function Page() {
         const elements: any[] = [];
 
         elements.push(
-            <button onClick={() => router.push(`/profile/${teamData.teamOwner.userID}`)}>
+            <button onClick={() => router.push(`/profile/${teamData.teamOwner.userID}`)}
+            className="white-button font-bold py-2 px-32">
                 { teamData.teamOwner.userNick }
             </button>
         )
 
         for (const member of teamData.teamMembers) {
             elements.push(
-                <button onClick={() => router.push(`/profile/${member.userID}`)}>
+                <button onClick={() => router.push(`/profile/${member.userID}`)}
+                className="white-button font-bold py-2 px-32">
                     { member.userNick }
                 </button>
             )
@@ -117,20 +119,20 @@ export default function Page() {
                     Loading...
                 </p>
             ) : (
-                <div>
+                <div className="grid grid-flow-row gap-y-4 divide-y-2 divide-gray-300">
                     <div className="flex justify-evenly">
-                        <p className="font-extrabold">
+                        <p className="font-extrabold text-2xl">
                             { teamData.teamName }
                         </p>
                         <button onClick={generateInvitationLink}
-                        className="flex content-center"
+                        className="flex content-center blue-button px-2 py-1"
                         disabled={buttonText != "Invite"}>
                             { buttonText }
                             { buttonText == "Invite" ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
                                 viewBox="0 0 24 24" 
-                                stroke-width="1.5" 
+                                stroke-width="2" 
                                 stroke="currentColor" 
                                 class="w-6 h-6">
                                     <path stroke-linecap="round" 
@@ -141,17 +143,13 @@ export default function Page() {
                             ) : (null)}
                         </button>
                         <button onClick={createMeeting}
-                        className="flex content-center">
+                        className="flex content-center blue-button px-2 py-1">
                             Create meeting
                             <svg xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
                             viewBox="0 0 24 24" 
-                            stroke-width="1.5" 
-                            stroke="currentColor" 
+                            fill="currentColor" 
                             class="w-6 h-6">
-                                <path stroke-linecap="round" 
-                                d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" 
-                                />
+                                <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" />
                             </svg>
                         </button>
                     </div>
@@ -201,25 +199,29 @@ export default function Page() {
                         ) : (
                             <>
                                 { tab == "tasks" ? (
-                                    <div>
-                                        { !showCreateTaskForm ? (
-                                            <button className="green-button"
-                                            onClick={() => setshowCreateTaskForm(true)}>
-                                                CREATE
-                                            </button>
-                                            ) : (
-                                                <>
-                                                    <button className="red-button"
-                                                    onClick={() => setshowCreateTaskForm(false)}>
-                                                        HIDE
-                                                    </button>
-                                                    <CreateTaskForm socket={socket} teamData={teamData}  />
-                                                </>
-                                        )}  
-                                        <TasksDisplay socket={socket} teamID={router.query.teamid} />            
+                                    <div className="grid grid-flow-col grid-cols-10 m-2">
+                                        <div className={showCreateTaskForm ? "col-span-8" : "col-span-9"}>
+                                            <TasksDisplay socket={socket} teamID={router.query.teamid} /> 
+                                        </div>
+                                        <div className="grid col-span-2">
+                                            { !showCreateTaskForm ? (
+                                                <button className="green-button place-self-start justify-self-end"
+                                                onClick={() => setshowCreateTaskForm(true)}>
+                                                    CREATE
+                                                </button>
+                                                ) : (
+                                                    <>
+                                                        <button className="red-button place-self-start justify-self-end"
+                                                        onClick={() => setshowCreateTaskForm(false)}>
+                                                            HIDE
+                                                        </button>
+                                                        <CreateTaskForm socket={socket} teamData={teamData}  />
+                                                    </>
+                                            )} 
+                                        </div>    
                                     </div>
                                 ) : (
-                                    <div className="grid grid-flow-row">
+                                    <div className="grid grid-flow-row place-items-center gap-y-2">
                                         { generateMembers() }
                                     </div>
                                 )}

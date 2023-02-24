@@ -44,8 +44,8 @@ export function TasksDisplay (props: any) {
                             No tasks
                         </p>
                     ): (
-                        <div className="grid grid-flow-col">
-                            <div className="bg-red-200 border-2 border-red-800">
+                        <div className="grid grid-flow-col gap-10 mx-10">
+                            <div className="bg-red-200 border-2 border-red-800 p-4">
                                 <p className="font-extrabold text-center">
                                     To do
                                 </p>
@@ -53,7 +53,7 @@ export function TasksDisplay (props: any) {
                                     { generateTasks("to do") }
                                 </div>
                             </div>
-                            <div className="bg-green-200 border-2 border-green-800">
+                            <div className="bg-green-200 border-2 border-green-800 p-4">
                                 <p className="font-extrabold text-center">
                                     Done
                                 </p>

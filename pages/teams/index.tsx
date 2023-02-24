@@ -17,7 +17,7 @@ export default function Page() {
 
         for (const team of teamsAvailable) {
             elements.push(<button onClick={() => router.push(`/team/${team.teamID}`)}
-            className="border border-blue-800 rounded-md text-blue-800 py-1 font-bold">
+            className="white-button py-1 font-bold">
                 { team.teamName }
             </button>)
         }

@@ -13,29 +13,29 @@ export default function NavBar() {
     }, [router.asPath])
 
     return (
-        <div className="flex justify-evenly">
+        <div className="grid grid-flow-col place-items-stretch">
             { userAuthenticated ? (
               <>
-                <button className="tab-button"
+                <button className={"py-4 " + (router.asPath === "/dashboard" ? "active-tab-button" : "tab-button")}
                 onClick={() => router.push("/dashboard")}>
                   Dashboard
                 </button>
-                <button className="tab-button"
+                <button className={"py-4 " + (router.asPath === "/teams" ? "active-tab-button" : "tab-button")}
                 onClick={() => router.push("/teams")}>
                   Teams
                 </button>
-                <button className="tab-button"
+                <button className={"py-4 " + (router.asPath === "/myprofile" ? "active-tab-button" : "tab-button")}
                 onClick={() => router.push("/myprofile")}>
                   Profile
                 </button>
               </>
             ) : (
               <>
-                 <button className="tab-button"
+                <button className={"py-4 " + (router.asPath === "/register" ? "active-tab-button" : "tab-button")}
                 onClick={() => router.push("/register")}>
                   Register
                 </button>
-                <button className="tab-button"
+                <button className={"py-4 " + (router.asPath === "/login" ? "active-tab-button" : "tab-button")}
                 onClick={() => router.push("/login")}>
                   Login
                 </button>
