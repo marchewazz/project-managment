@@ -51,21 +51,22 @@ export default function TeamChat(props: any) {
     }, [props.socket])
 
     return (
-        <>
-            <div className="max-h-60 overflow-y-auto">
+        <div className="m-2">
+            <div className="max-h-96 overflow-y-auto bg-gray-200 p-4 rounded-lg border-2 border-gray-400 text-xl">
                 { generateMessages() }
                 <div ref={messagesEndRef}/>
             </div>
-            <div className="grid grid-flow-col">
-                <input className="border-b-2" 
+            <div className="grid grid-flow-col grid-cols-10">
+                <input className="border-b-2 col-span-8" 
                 onChange={(event: any) => setMessage(event.target.value)}
                 onKeyDown={(e) => e.key == 'Enter' && message ? sendMessage() : null }
                 type="text" 
                 name="message"
                 placeholder="Write a message..."
                 value={message}
-                autoFocus={true} />
-                <button className="group p-1"
+                autoFocus={true}
+                maxLength={100} />
+                <button className="group p-1 col-span-2"
                 onClick={sendMessage}
                 disabled={!message}>
                     <svg xmlns="http://www.w3.org/2000/svg" 
@@ -82,6 +83,6 @@ export default function TeamChat(props: any) {
                     </svg>
                 </button>
             </div>
-        </>
+        </div>
     )
 }
