@@ -13,7 +13,18 @@ export default function Page() {
     const [callID, setCallID]: any = useState();
     const [userName, setUserName] = useState("");
 
+    const [micOn, setMicOn] = useState(false);
+    const [webcamOn, setWebcamOn] = useState(false);
+
     const router = useRouter();
+
+    function switchMic(): void {
+        setMicOn(!micOn)
+    }
+
+    function switchWebcam(): void {
+        setWebcamOn(!webcamOn)
+    }
 
     useEffect(() => {
         if (!router.isReady) return
@@ -35,16 +46,17 @@ export default function Page() {
         <>
             { token && callID && userName ? (
                 <>
+                    
                     <MeetingProvider
                     config={{
                     meetingId: callID,
-                    micEnabled: false,
-                    webcamEnabled: false,
+                    micEnabled: micOn,
+                    webcamEnabled: webcamOn,
                     name: userName,
                     }}
                     token={token}>
                         <MeetingConsumer>
-                            {() => <MeetingGrid />}
+                            {() => <MeetingGrid micOn={micOn} switchMic={switchMic} webcamOn={webcamOn} switchWebcam={switchWebcam} />}
                         </MeetingConsumer>
                     </MeetingProvider>
                 </>
