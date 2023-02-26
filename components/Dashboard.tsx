@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import * as io from "socket.io-client";
+import InvitationsDisplay from "./InvitationsDisplay";
 import UpcomingTasks from "./UpcomingTasks";
 
 export default function Dashboard(props: any) {
@@ -21,13 +22,16 @@ export default function Dashboard(props: any) {
     return (
         <>
             { ready ? (
-                <div>
+                <div className="grid grid-flow-col">
                     <div>
                 
                     </div>
-                    <div>
+                    <div className="grid grid-flow-row">
                         <div>
                             <UpcomingTasks socket={socket} />
+                        </div>
+                        <div>
+                            <InvitationsDisplay socket={socket} />
                         </div>
                     </div>
                 </div>

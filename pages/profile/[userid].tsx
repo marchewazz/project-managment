@@ -25,19 +25,19 @@ export default function Page() {
 
     function cancelInvitation() {
         const { userid } = router.query
-        const invitation = invitations.find((element: any) => element.invitationReceiver == userid || element.invitationSender == userid)
+        const invitation = invitations.find((element: any) => element.invitationReceiver.userID == userid || element.invitationSender.userID == userid)
         socket.emit("cancel-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
 
     function acceptInvitation() {
         const { userid } = router.query
-        const invitation = invitations.find((element: any) => element.invitationSender == userid)
+        const invitation = invitations.find((element: any) => element.invitationSender.userID == userid)
         socket.emit("accept-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
 
     function rejectInvitation() {
         const { userid } = router.query
-        const invitation = invitations.find((element: any) => element.invitationSender == userid)
+        const invitation = invitations.find((element: any) => element.invitationSender.userID == userid)
         socket.emit("reject-invitation", { userToken: localStorage.getItem("token"), invitationID: invitation.invitationID })
     }
 
@@ -77,7 +77,7 @@ export default function Page() {
 
     useEffect(() => {
         const { userid } = router.query
-        const invitation = invitations.find((element: any) => element.invitationReceiver == userid || element.invitationSender == userid)
+        const invitation = invitations.find((element: any) => element.invitationReceiver.userID == userid || element.invitationSender.userID == userid)
        
         if (invitation) {
             if (invitation.isUserSender) setInvitationStatus("sent")
